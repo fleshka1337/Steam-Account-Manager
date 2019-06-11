@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Steam Account Manager</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Аккаунты</string>
+    <string name="title_dashboard">Паенль управления</string>
+    <string name="title_notifications">Уведомления</string>
+    <string name="title_asf">ASF</string>
+    <string name="title_account">Аккаунт</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
