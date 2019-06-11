@@ -24,21 +24,27 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectedFragment = new AccountFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.fragment_container, selectedFragment).
                             addToBackStack(null).show(selectedFragment)
                             .detach(selectedFragment).attach(selectedFragment)
                             .commit();
                     return true;
                 case R.id.navigation_ASF:
                     selectedFragment = new ASFFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.fragment_container, selectedFragment).
                             addToBackStack(null).show(selectedFragment)
                             .detach(selectedFragment).attach(selectedFragment)
                             .commit();
                     return true;
                 case R.id.navigation_account:
                     selectedFragment = new ProfileFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.fragment_container, selectedFragment).
                             addToBackStack(null).show(selectedFragment)
                             .detach(selectedFragment).attach(selectedFragment)
                             .commit();

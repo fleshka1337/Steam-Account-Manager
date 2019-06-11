@@ -3,6 +3,8 @@ package com.example.steamaccountmanager;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +33,12 @@ public class AccountFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment selectedFragment = null;
-                selectedFragment = new AddAccountSteam();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).
-                        addToBackStack(null).show(selectedFragment)
-                        .detach(selectedFragment).attach(selectedFragment)
-                        .commit();
+//                Fragment selectedFragment = null;
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.replace(R.id.fragment_container, new AddAccountSteam()).addToBackStack(null);
+                transaction.commit();
             }
         });
 
