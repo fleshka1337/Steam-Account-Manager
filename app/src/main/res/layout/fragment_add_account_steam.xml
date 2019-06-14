@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddAccountSteam">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <TextView
+        android:id="@+id/steam_id_set"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Add_Accont_Steam_Fragment"
+        android:text=""
         android:gravity="center"
-        android:textSize="36dp"
+        android:textSize="24dp"
         android:textColor="#a9a9a9"/>
+
+    <Button
+        android:id="@+id/steam_id"
+        android:layout_width="256dp"
+        android:layout_height="64dp"
+        android:text="Получить данные"
+        android:textSize="16sp"
+        android:layout_gravity="center|bottom"/>
+
+    <EditText
+        android:id="@+id/steam_id_get"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="top"
+        android:hint="steamID"/>
+
 
 </FrameLayout>
