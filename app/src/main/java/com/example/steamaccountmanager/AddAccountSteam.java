@@ -66,7 +66,12 @@ public class AddAccountSteam extends Fragment {
 //                steam = steam_id_get.getText().toString();
 //                steam_id_set.setText(steam);
                 steam_id_64 = steam_id_get.getText().toString();
-                jsonParse();
+                if (steam_id_64.matches("[0-9]{17}")) {
+                    jsonParse();
+                }else
+                {
+                    parse_steamid_64();
+                }
             }
         });
 
@@ -150,21 +155,18 @@ public class AddAccountSteam extends Fragment {
             mQueue.add(request);
     }
 
-    private void parse_steaid_64(){
-        String temp_url = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=0997EAA83C80BF503C794A872FD94064&vanityurl="+steam_id_64;
+    private void parse_steamid_64(){
+        String temp_url = "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=0997EAA83C80BF503C794A872FD94064&vanityurl="+steam_id_64;
 
         JsonObjectRequest temp_request = new JsonObjectRequest(Request.Method.GET, temp_url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("response");
+                            JSONObject response_id = response.getJSONObject("response");
 
-                            for (int i = 0; i < jsonArray.length(); i++){
-                                JSONObject response_id = jsonArray.getJSONObject(i);
-
-                                SteamId = response_id.getString("steamid");
-                            }
+                            steam_id_64 = response_id.getString("steamid");
+                            jsonParse();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -178,48 +180,6 @@ public class AddAccountSteam extends Fragment {
 
         mQueue.add(temp_request);
 
-        String url = "https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=0997EAA83C80BF503C794A872FD94064&steamids=" + SteamId;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("players");
-
-                            for (int i = 0; i < jsonArray.length(); i++){
-                                JSONObject player = jsonArray.getJSONObject(i);
-
-                                String SteamId = player.getString("SteamId");
-                                boolean CommunityBanned = player.getBoolean("CommunityBanned");
-                                boolean VACBanned = player.getBoolean("VACBanned");
-                                int NumberOfVACBans = player.getInt("NumberOfVACBans");
-                                int DaysSinceLastBan = player.getInt("DaysSinceLastBan");
-                                int NumberOfGameBans = player.getInt("NumberOfGameBans");
-                                String EconomyBan = player.getString("EconomyBan");
-
-                                steam_id_set.append(
-                                        "SteamID - "+String.valueOf(SteamId) + ", \n"+
-                                                "CommunityBanned - "+String.valueOf(CommunityBanned)+ ", \n"+
-                                                "VACBanned - "+String.valueOf(VACBanned)+ ", \n"+
-                                                "NumberOfVACBans - "+String.valueOf(NumberOfVACBans)+ ", \n"+
-                                                "DaysSinceLastBan - "+String.valueOf(DaysSinceLastBan)+ ", \n"+
-                                                "NumberOfGameBans - "+String.valueOf(NumberOfGameBans)+ ", \n"+
-                                                "EconomyBan - "+String.valueOf(EconomyBan)+ ", \n");
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        mQueue.add(request);
     }
 
 }
