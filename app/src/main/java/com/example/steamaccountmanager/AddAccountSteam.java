@@ -82,13 +82,7 @@ public class AddAccountSteam extends Fragment {
 //                steam = steam_id_get.getText().toString();
 //                steam_id_set.setText(steam);
                 steam_id_64 = steam_id_get.getText().toString();
-                if (steam_id_64.matches("[0-9]{17}")) {
-                    jsonParse();
-                }else
-                {
-                    parse_steamid_64();
-
-                }
+                getBanInfo(steam_id_64)
                 try {
                     getBackgroundURL();
                 } catch (IOException e){
@@ -100,7 +94,7 @@ public class AddAccountSteam extends Fragment {
         return view;
     }
 
-    private void jsonParse(){
+    private void getBanInfo(String steam_id){
 
 //        String url = "https://api.myjson.com/bins/kp9wz";
 //
@@ -132,8 +126,10 @@ public class AddAccountSteam extends Fragment {
 //        });
 //
 //        mQueue.add(request);
-
-            String url = "https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=0997EAA83C80BF503C794A872FD94064&steamids=" + steam_id_64;
+            if(!steam_id.matches("[0-9]{17}")){
+                steam_id = getSteamID64(steam_id)
+            }
+            String url = "https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=0997EAA83C80BF503C794A872FD94064&steamids=" + steam_id;
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -177,7 +173,7 @@ public class AddAccountSteam extends Fragment {
             mQueue.add(request);
     }
 
-    private void parse_steamid_64(){
+    private String getSteamID64(String steam_id){
         String temp_url = "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=0997EAA83C80BF503C794A872FD94064&vanityurl="+steam_id_64;
 
         JsonObjectRequest temp_request = new JsonObjectRequest(Request.Method.GET, temp_url, null,
@@ -186,9 +182,8 @@ public class AddAccountSteam extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONObject response_id = response.getJSONObject("response");
-
-                            steam_id_64 = response_id.getString("steamid");
-                            jsonParse();
+                            String id64 = response_id.getString("steamid");
+                            return id64;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
